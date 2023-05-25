@@ -62,7 +62,7 @@ def read_manual(state:str='MA', file_name='MA_Drivers_Manual.pdf', rule_file:str
     MAX_PAGES = pdfReader.numPages
     #    MAX_PAGES = 10
     START_PAGE = 84 # This starts from the rules of the road for MA.
-    END_PAGE = MAX_PAGES-1 #START_PAGE+40 # MAX_PAGES
+    END_PAGE = START_PAGE+40 #MAX_PAGES-1 START_PAGE+40 # MAX_PAGES
     all_rules = []
     all_sentences = []
 
@@ -263,8 +263,6 @@ def get_root(doc):
             return token.lemma_ # Lemmatized version of root is returned
     return ""
 
-
-
 def make_one_triple(sentence: str) -> str:
     """
     Makes a single triple, that should be returned as a string.
@@ -275,31 +273,8 @@ def make_one_triple(sentence: str) -> str:
     if 'not' in sentence or 'never' in sentence:
         neg = True
 
-    # tokens = word_tokenize(sentence)
-    # TODO: 131You, numbers at start of word need to be trimmed
-    """
-    Trend for missing obj is usually a verb in infinitive form, for example:
-    find out if you [are eligible] to renew. Here, [are eligible] should be the obj, but isn't recognized
-    ideal triple would be something like (self, find, eligible)
+    # TODO: 131You, numbers at start of word need to be trimmed, similar cases where numbers are present when they shouldn't be
 
-    Incorrect obj:
-    If the problem is safety-related, you must have the problem fixed immediately
-    IF (problem, isA, be), THEN (self, hasA, problem)
-
-    Likely spacy doesn't recognize this safety-related as one word indirect obj
-    and self, hasA, problem should instead be (self, fix, problem). But this is a more complex case.
-
-
-    If you really need to idle, shift to neutral, so the engine is not working against your brake and consuming more fuel
-    IF (self, isA, need), THEN AND((engine, shift, neutral), (self, consume, fuel))
-    should be IF (self, need, idle), THEN AND((engine, shift, neutral), (self, consume, fuel))
-    ^^The temporary fix causes this one
-
-    * Test for first 10 pages (Rules of the Road)
-    * 
-
-
-    """
     doc = nlp(sentence)
     
     try:
