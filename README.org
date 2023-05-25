@@ -4,3 +4,6 @@ Install required dependencies with:
 Run the commands with:
 =python3 driving_rules.py= (for Massachusetts)
 =python3 driving_rules.py --state CA= (for California)
+
+For using spaCy:
+Create a python venv and follow https://spacy.io/usage to install the correct version for your system.
